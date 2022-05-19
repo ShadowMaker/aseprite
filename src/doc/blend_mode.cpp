@@ -34,6 +34,8 @@ std::string blend_mode_to_string(BlendMode blendMode)
     case BlendMode::ADDITION: return "addition";
     case BlendMode::SUBTRACT: return "subtract";
     case BlendMode::DIVIDE: return "divide";
+    case BlendMode::PIXEL_PAINT: return "pixel_paint";
+    case BlendMode::EMPTY_PAINT: return "empty_paint";
     default: return "unknown";
   }
 }

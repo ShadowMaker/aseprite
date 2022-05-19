@@ -10,6 +10,7 @@
 #endif
 
 #include "app/app.h"
+#include "app/log.h"
 #include "app/commands/commands.h"
 #include "app/commands/params.h"
 #include "app/context.h"
@@ -610,6 +611,13 @@ int App_get_activeTool(lua_State* L)
   return 1;
 }
 
+int App_activate_lua_tool(lua_State* L)
+{
+  tools::Tool* tool = App::instance()->activeToolManager()->activateLuaTool();
+  push_tool(L, tool);
+  return 1;
+}
+
 int App_get_activeBrush(lua_State* L)
 {
 #if ENABLE_UI
@@ -706,6 +714,16 @@ int App_set_defaultPalette(lua_State* L)
   return 0;
 }
 
+int App_setActiveTool(lua_State* L)
+{
+    const char* buff = lua_tostring(L, 1);
+    App::instance()->activeToolManager()->activateToolByName(buff);
+    char logb[100];
+    ::sprintf(logb, "TOOL: Tool_set_active called %s\n", buff);
+    LOG(logb);
+    return 0;
+}
+
 const luaL_Reg App_methods[] = {
   { "open",        App_open },
   { "exit",        App_exit },
@@ -715,6 +733,8 @@ const luaL_Reg App_methods[] = {
   { "alert",       App_alert },
   { "refresh",     App_refresh },
   { "useTool",     App_useTool },
+  { "activateLuaTool", App_activate_lua_tool},
+  { "setActiveTool", App_setActiveTool},
   { nullptr,       nullptr }
 };
 

@@ -41,7 +41,9 @@ namespace doc {
     HSL_LUMINOSITY  = 15,
     ADDITION        = 16,
     SUBTRACT        = 17,
-    DIVIDE          = 18
+    DIVIDE          = 18,
+    PIXEL_PAINT     = 19,
+    EMPTY_PAINT     = 20
   };
 
   std::string blend_mode_to_string(BlendMode blendMode);

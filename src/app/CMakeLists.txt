@@ -584,6 +584,7 @@ add_library(app-lib
   thumbnails.cpp
   tools/active_tool.cpp
   tools/ink_type.cpp
+  tools/lua_ink.cpp
   tools/intertwine.cpp
   tools/pick_ink.cpp
   tools/point_shape.cpp

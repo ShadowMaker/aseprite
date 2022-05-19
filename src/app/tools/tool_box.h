@@ -31,6 +31,10 @@ namespace app {
       extern const char* Move;
     };
 
+    namespace ExperimentalTools {
+      extern const char* CustomLuaTool;
+    };
+
     namespace WellKnownInks {
       extern const char* Selection;
       extern const char* Paint;
@@ -55,6 +59,10 @@ namespace app {
       extern const char* Blur;
       extern const char* Jumble;
     };
+
+    namespace ExperimentalInks {
+      extern const char* Lua;
+    }
 
     namespace WellKnownControllers {
       extern const char* Freehand;

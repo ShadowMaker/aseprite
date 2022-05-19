@@ -35,6 +35,7 @@
 
 #include "app/tools/controllers.h"
 #include "app/tools/inks.h"
+#include "app/tools/lua_ink.h"
 #include "app/tools/intertwiners.h"
 #include "app/tools/point_shapes.h"
 
@@ -50,6 +51,8 @@ const char* WellKnownTools::Eraser = "eraser";
 const char* WellKnownTools::Eyedropper = "eyedropper";
 const char* WellKnownTools::Hand = "hand";
 const char* WellKnownTools::Move = "move";
+
+const char* ExperimentalTools::CustomLuaTool = "customluatool";
 
 const char* WellKnownInks::Selection = "selection";
 const char* WellKnownInks::Paint = "paint";
@@ -73,6 +76,7 @@ const char* WellKnownInks::Slice = "slice";
 const char* WellKnownInks::MoveSlice = "move_slice";
 const char* WellKnownInks::Blur = "blur";
 const char* WellKnownInks::Jumble = "jumble";
+const char* ExperimentalInks::Lua = "lua";
 
 const char* WellKnownControllers::Freehand = "freehand";
 const char* WellKnownControllers::PointByPoint = "point_by_point";
@@ -132,6 +136,7 @@ ToolBox::ToolBox()
   m_inks[WellKnownInks::Slice]           = new SliceInk();
   m_inks[WellKnownInks::Blur]            = new BlurInk();
   m_inks[WellKnownInks::Jumble]          = new JumbleInk();
+  m_inks[ExperimentalInks::Lua]          = new LuaInk();
 
   m_controllers[WellKnownControllers::Freehand] = new FreehandController();
   m_controllers[WellKnownControllers::PointByPoint] = new PointByPointController();

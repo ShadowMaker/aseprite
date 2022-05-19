@@ -98,6 +98,9 @@ public:
     mode()->addItem(new BlendModeItem("Saturation", doc::BlendMode::HSL_SATURATION));
     mode()->addItem(new BlendModeItem("Color", doc::BlendMode::HSL_COLOR));
     mode()->addItem(new BlendModeItem("Luminosity", doc::BlendMode::HSL_LUMINOSITY));
+    mode()->addItem(new SeparatorInView);
+    mode()->addItem(new BlendModeItem("PixelPaint", doc::BlendMode::PIXEL_PAINT));
+    mode()->addItem(new BlendModeItem("EmptyPaint", doc::BlendMode::EMPTY_PAINT));
 
     name()->Change.connect([this]{ onStartTimer(); });
     mode()->Change.connect([this]{ onStartTimer(); });

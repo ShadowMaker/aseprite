@@ -11,10 +11,12 @@
 
 #include "app/tools/active_tool.h"
 
+#include "app/log.h"
 #include "app/color.h"
 #include "app/pref/preferences.h"
 #include "app/tools/active_tool_observer.h"
 #include "app/tools/ink.h"
+#include "app/tools/lua_ink.h"
 #include "app/tools/pointer.h"
 #include "app/tools/tool_box.h"
 #include "app/ui/color_bar.h"
@@ -225,6 +227,18 @@ void ActiveToolManager::setSelectedTool(Tool* tool)
 
   m_selectedTool = tool;
   notify_observers(&ActiveToolObserver::onSelectedToolChange, tool);
+}
+
+Tool* ActiveToolManager::activateLuaTool()
+{
+  return activateToolByName(ExperimentalTools::CustomLuaTool);
+}
+
+Tool* ActiveToolManager::activateToolByName(const char* toolName)
+{
+  Tool* tool = m_toolbox->getToolById(toolName);
+  setSelectedTool(tool);
+  return tool;
 }
 
 // static

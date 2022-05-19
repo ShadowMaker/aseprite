@@ -13,6 +13,7 @@
 #include "app/cmd/set_layer_name.h"
 #include "app/cmd/set_layer_opacity.h"
 #include "app/doc.h"
+#include "app/site.h"
 #include "app/doc_api.h"
 #include "app/script/docobj.h"
 #include "app/script/engine.h"
@@ -317,6 +318,30 @@ int Layer_set_isExpanded(lua_State* L)
   return 0;
 }
 
+int Layer_get_isActive(lua_State* L)
+{
+  auto layer = get_docobj<Layer>(L, 1);
+  app::Context* ctx = App::instance()->context();
+  Site site = ctx->activeSite();
+  lua_pushboolean(L, site.layer()->id() == layer->id());
+  return 1;
+}
+
+int Layer_set_isActive(lua_State* L)
+{
+#ifdef ENABLE_UI
+  auto layer = get_docobj<Layer>(L, 1);
+  app::Context* ctx = App::instance()->context();
+  ctx->setActiveLayer(layer);
+
+  if (ctx && ctx->isUIAvailable()) 
+  {
+    app_refresh_screen();
+  }
+#endif
+return 0;
+}
+
 int Layer_set_parent(lua_State* L)
 {
   auto layer = get_docobj<Layer>(L, 1);
@@ -377,6 +402,7 @@ const Property Layer_properties[] = {
   { "isContinuous", Layer_get_isContinuous, Layer_set_isContinuous },
   { "isCollapsed", Layer_get_isCollapsed, Layer_set_isCollapsed },
   { "isExpanded", Layer_get_isExpanded, Layer_set_isExpanded },
+  { "isActive", Layer_get_isActive, Layer_set_isActive },
   { "cels", Layer_get_cels, nullptr },
   { "color", UserData_get_color<Layer>, UserData_set_color<Layer> },
   { "data", UserData_get_text<Layer>, UserData_set_text<Layer> },

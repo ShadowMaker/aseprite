@@ -71,6 +71,7 @@ color_t graya_blender_##name##_n(color_t backdrop, color_t src, int opacity) {  
     return graya_blender_normal(backdrop, src, opacity);                        \
 }
 
+
 inline uint32_t blend_divide(uint32_t b, uint32_t s)
 {
   if (b == 0)
@@ -523,6 +524,26 @@ color_t rgba_blender_divide(color_t backdrop, color_t src, int opacity)
   return rgba_blender_normal(backdrop, src, opacity);
 }
 
+color_t rgba_blender_pixel_paint(color_t backdrop, color_t src, int opacity)
+{
+
+  int pr = (backdrop & rgba_r_mask) >> rgba_r_shift;
+  int pg = (backdrop & rgba_g_mask) >> rgba_g_shift;
+  int pb = (backdrop & rgba_b_mask) >> rgba_b_shift; 
+  int a = (pr != 0xff || pg != 0xff || pb != 0xff) ? 0xff : 0x0;
+
+  int r = (a == 0) ? 0 : (src & rgba_r_mask) >> rgba_r_shift;
+  int g = (a == 0) ? 0 : (src & rgba_g_mask) >> rgba_g_shift;
+  int b = (a == 0) ? 0 : (src & rgba_b_mask) >> rgba_b_shift;
+  src = rgba(r, g, b, a);
+  return src;
+}
+
+color_t rgba_blender_empty_paint(color_t backdrop, color_t src, int opacity)
+{
+  return backdrop;
+}
+
 // New Blender Methods:
 RGBA_BLENDER_N(multiply)
 RGBA_BLENDER_N(screen)
@@ -542,6 +563,8 @@ RGBA_BLENDER_N(hsl_luminosity)
 RGBA_BLENDER_N(addition)
 RGBA_BLENDER_N(subtract)
 RGBA_BLENDER_N(divide)
+RGBA_BLENDER_N(pixel_paint)
+RGBA_BLENDER_N(empty_paint)
 
 //////////////////////////////////////////////////////////////////////
 // GRAY blenders
@@ -731,6 +754,26 @@ color_t graya_blender_divide(color_t backdrop, color_t src, int opacity)
   return graya_blender_normal(backdrop, src, opacity);
 }
 
+color_t graya_blender_pixel_paint(color_t backdrop, color_t src, int opacity)
+{
+
+  int pr = (backdrop & rgba_r_mask) >> rgba_r_shift;
+  int pg = (backdrop & rgba_g_mask) >> rgba_g_shift;
+  int pb = (backdrop & rgba_b_mask) >> rgba_b_shift; 
+  int a = (pr != 0xff || pg != 0xff || pb != 0xff) ? 0xff : 0x0;
+
+  int r = (a == 0) ? 0 : (src & rgba_r_mask) >> rgba_r_shift;
+  int g = (a == 0) ? 0 : (src & rgba_g_mask) >> rgba_g_shift;
+  int b = (a == 0) ? 0 : (src & rgba_b_mask) >> rgba_b_shift;
+  src = rgba(r, g, b, a);
+  return src;
+}
+
+color_t graya_blender_empty_paint(color_t backdrop, color_t src, int opacity)
+{
+  return backdrop;
+}
+
 GRAYA_BLENDER_N(multiply)
 GRAYA_BLENDER_N(screen)
 GRAYA_BLENDER_N(overlay)
@@ -745,6 +788,8 @@ GRAYA_BLENDER_N(exclusion)
 GRAYA_BLENDER_N(addition)
 GRAYA_BLENDER_N(subtract)
 GRAYA_BLENDER_N(divide)
+GRAYA_BLENDER_N(pixel_paint)
+GRAYA_BLENDER_N(empty_paint)
 
 //////////////////////////////////////////////////////////////////////
 // indexed
@@ -786,6 +831,8 @@ BlendFunc get_rgba_blender(BlendMode blendmode, const bool newBlend)
     case BlendMode::ADDITION:       return newBlend? rgba_blender_addition_n: rgba_blender_addition;
     case BlendMode::SUBTRACT:       return newBlend? rgba_blender_subtract_n: rgba_blender_subtract;
     case BlendMode::DIVIDE:         return newBlend? rgba_blender_divide_n: rgba_blender_divide;
+    case BlendMode::PIXEL_PAINT:    return newBlend? rgba_blender_pixel_paint_n: rgba_blender_pixel_paint;
+    case BlendMode::EMPTY_PAINT:    return newBlend? rgba_blender_empty_paint_n: rgba_blender_empty_paint;
   }
   ASSERT(false);
   return rgba_blender_src;
@@ -820,6 +867,8 @@ BlendFunc get_graya_blender(BlendMode blendmode, const bool newBlend)
     case BlendMode::ADDITION:       return newBlend? graya_blender_exclusion_n: graya_blender_addition;
     case BlendMode::SUBTRACT:       return newBlend? graya_blender_subtract_n: graya_blender_subtract;
     case BlendMode::DIVIDE:         return newBlend? graya_blender_divide_n: graya_blender_divide;
+    case BlendMode::PIXEL_PAINT:    return newBlend? graya_blender_pixel_paint_n: graya_blender_pixel_paint;
+    case BlendMode::EMPTY_PAINT:    return newBlend? graya_blender_empty_paint_n: graya_blender_empty_paint;
   }
   ASSERT(false);
   return graya_blender_src;

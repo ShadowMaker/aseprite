@@ -10,6 +10,7 @@
 #pragma once
 
 #include "app/tools/ink_type.h"
+#include "app/script/luacpp.h"
 #include "obs/observable.h"
 
 namespace app {
@@ -47,6 +48,10 @@ public:
   void pressButton(const Pointer& pointer);
   void releaseButtons();
   void setSelectedTool(Tool* tool);
+
+  //Experimental
+  Tool* activateLuaTool();
+  Tool* activateToolByName(const char* name);
 
   Ink* adjustToolInkDependingOnSelectedInkType(
     Ink* ink,

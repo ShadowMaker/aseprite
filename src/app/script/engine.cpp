@@ -288,6 +288,8 @@ Engine::Engine()
   setfield_integer(L, "ADDITION", doc::BlendMode::ADDITION);
   setfield_integer(L, "SUBTRACT", doc::BlendMode::SUBTRACT);
   setfield_integer(L, "DIVIDE", doc::BlendMode::DIVIDE);
+  setfield_integer(L, "PIXEL_PAINT", doc::BlendMode::PIXEL_PAINT);
+  setfield_integer(L, "EMPTY_PAINT", doc::BlendMode::EMPTY_PAINT);
   lua_pop(L, 1);
 
   lua_newtable(L);

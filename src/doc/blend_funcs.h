@@ -41,6 +41,7 @@ namespace doc {
   color_t rgba_blender_addition(color_t backdrop, color_t src, int opacity);
   color_t rgba_blender_subtract(color_t backdrop, color_t src, int opacity);
   color_t rgba_blender_divide(color_t backdrop, color_t src, int opacity);
+  color_t rgba_blender_pixelpaint(color_t backdrop, color_t src, int opacity);
 
   color_t graya_blender_src(color_t backdrop, color_t src, int opacity);
   color_t graya_blender_merge(color_t backdrop, color_t src, int opacity);
@@ -61,6 +62,7 @@ namespace doc {
   color_t graya_blender_addition(color_t backdrop, color_t src, int opacity);
   color_t graya_blender_subtract(color_t backdrop, color_t src, int opacity);
   color_t graya_blender_divide(color_t backdrop, color_t src, int opacity);
+  color_t graya_blender_pixelpaint(color_t backdrop, color_t src, int opacity);
 
   color_t indexed_blender_src(color_t dst, color_t src, int opacity);
 
